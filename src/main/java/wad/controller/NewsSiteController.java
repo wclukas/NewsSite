@@ -28,9 +28,10 @@ public class NewsSiteController {
     
     @GetMapping("/etusivu")
     public String getEtusivu(Model model) {
-//        PageRequest pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "julkaisuAika");
-//        model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
-////        model.addAttribute("uutiset", pageable);
+        PageRequest pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "julkaisuAika");
+        model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
+        model.addAttribute("lööpit", pageable);
+        model.addAttribute("uutiset", newsSiteService.tulostaUutiset());
         return "etusivu";
     }
     
@@ -43,7 +44,7 @@ public class NewsSiteController {
     @GetMapping("/kategoriat/{id}")
     public String getKategoria(Model model, @PathVariable Long id) {
         Kategoria kategoria = newsSiteService.getKategoria(id);
-        model.addAttribute("kategoria", kategoria.getNimi());
+        model.addAttribute("kategoria", kategoria);
         model.addAttribute("uutiset", newsSiteService.uutinenByKategoria(kategoria));
         return "kategoria";
     }

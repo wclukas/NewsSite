@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wad.domain.Kategoria;
+import wad.domain.Kirjoittaja;
 import wad.domain.Uutinen;
 import wad.repository.FileRepository;
 import wad.repository.KategoriaRepository;
@@ -28,12 +29,12 @@ public class NewsSiteService {
     
     @PostConstruct
     public void teeKategoriat() {
-        kategoriaRepository.save(new Kategoria("Urheilu"));
-        kategoriaRepository.save(new Kategoria("Kotimaa"));
-        kategoriaRepository.save(new Kategoria("Ulkomaat"));
-        kategoriaRepository.save(new Kategoria("Talous"));
-        kategoriaRepository.save(new Kategoria("Lääketiede"));
-        kategoriaRepository.save(new Kategoria("Viihde"));
+        kategoriaRepository.save(new Kategoria("Neurologia"));
+        kategoriaRepository.save(new Kategoria("Psykiatria"));
+        kategoriaRepository.save(new Kategoria("Endokrinologia"));
+        kategoriaRepository.save(new Kategoria("Neurokirurgia"));
+        kategoriaRepository.save(new Kategoria("Geriatria"));
+        kategoriaRepository.save(new Kategoria("Verisuonikirurgia"));
     }
     
     @PostConstruct
@@ -49,12 +50,16 @@ public class NewsSiteService {
         return kategoriaRepository.findAll();
     }
     
+    public List<Uutinen> tulostaUutiset() {
+        return uutinenRepository.findAll();
+    }
+    
     public List<Uutinen> uutinenByKategoria(Kategoria kategoria) {
         List<Uutinen> uutiset = new ArrayList<>();
-        uutiset = uutinenRepository.findAll();
-        for (int i = 0; i < uutiset.size(); i++) {
-            if (!uutiset.get(i).kuuluuKategoriaan(kategoria)) {
-                uutiset.remove(i);
+        
+        for (Uutinen uutinen : uutinenRepository.findAll()) {
+            if (uutinen.kuuluuKategoriaan(kategoria)) {
+                uutiset.add(uutinen);
             }
         }
         return uutiset;
@@ -62,6 +67,14 @@ public class NewsSiteService {
     
     public Kategoria getKategoria(Long id) {
         return kategoriaRepository.getOne(id);
+    }
+    
+    public Uutinen getUutinen(Long id) {
+        return uutinenRepository.getOne(id);
+    }
+    
+    public Kirjoittaja getKirjoittaja(Long id) {
+        return kirjoittajaRepository.getOne(id);
     }
     
     

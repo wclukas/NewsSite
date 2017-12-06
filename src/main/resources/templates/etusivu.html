@@ -7,21 +7,32 @@
         
     </head>
     <body>
-<!--        <ol>
+        <ol>
             <li th:each="kategoria : ${kategoriat}">
                 <a th:href="@{/kategoriat/{id}(id=${kategoria.id})}">
                     <span th:text="${kategoria.nimi}">Kategorian nimi</span>
                 </a>
             </li>    
-        </ol>-->
+        </ol>
         
         <h1>Lööpit</h1>
-<!--        <ol>
+        <ol>
             <li th:each="uutinen : ${uutiset}">
-                <span th:text="${uutinen.otsikko}"> Uutisen otsikko</span>
-            </li>
-        </ol>-->
+                <a th:href="@{/{id}(id=${uutinen.id})}">
+                    <span th:text="${uutinen.otsikko}">Uutisen otsikko</span>
+                </a>
+            </li> 
+        </ol>
         
         <h2>Muut uutiset: </h2>
+        
+            <ol>
+                <li th:each="uutinen : ${uutiset}">
+                    <a th:href="@{/{id}(id=${uutinen.id})}">
+                        <span th:text="${uutinen.otsikko}">Uutisen otsikko</span>
+                    </a>
+                </li>    
+            </ol>    
+            
     </body>
 </html>
