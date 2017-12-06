@@ -28,9 +28,9 @@ public class NewsSiteController {
     
     @GetMapping("/etusivu")
     public String getEtusivu(Model model) {
-        PageRequest pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "julkaisuAika");
-        model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
-        model.addAttribute("uutiset", pageable);
+//        PageRequest pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "julkaisuAika");
+//        model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
+////        model.addAttribute("uutiset", pageable);
         return "etusivu";
     }
     
