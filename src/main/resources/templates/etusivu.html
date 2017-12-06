@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Etusivu</title>
+        <meta charset="UTF-8"/>
+        
+    </head>
+    <body>
+        <ol>
+            <li th:each="kategoria : ${kategoriat}">
+                <a th:href="@{/kategoriat/{id}(id=${kategoria.id})}">
+                    <span th:text="${kategoria.nimi}">Kategorian nimi</span>
+                </a>
+            </li>    
+        </ol>
+        
+        <h1>Lööpit</h1>
+        <ol>
+            <li th:each="uutinen : ${uutiset}">
+                <span th:text="${uutinen.otsikko}"> Uutisen otsikko</span>
+            </li>
+        </ol>
+        
+        <h2>Muut uutiset: </h2>
+    </body>
+</html>
