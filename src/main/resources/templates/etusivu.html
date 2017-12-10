@@ -15,24 +15,32 @@
             </li>    
         </ol>
         
-        <h1>Lööpit</h1>
-        <ol>
+        <h1>Uusimmat uutiset:</h1>
+        <ul>
+            <li th:each="uutinen : ${loopit}">
+                <a th:href="@{/{id}(id=${uutinen.id})}">
+                    <span th:text="${uutinen.otsikko}">Uutisen otsikko</span>
+                    <span th:text="${uutinen.ingressi}">Uutisen ingressi</span>
+                    <img th:src="@{/files/{id}(id=${uutinen.id})}">Uutisen kuva</img>
+                </a>
+            </li> 
+        </ul>
+        
+        <h2>Kaikki uutiset: </h2>
+        
+        <ul>
             <li th:each="uutinen : ${uutiset}">
                 <a th:href="@{/{id}(id=${uutinen.id})}">
                     <span th:text="${uutinen.otsikko}">Uutisen otsikko</span>
                 </a>
-            </li> 
-        </ol>
+            </li>    
+        </ul>   
         
-        <h2>Muut uutiset: </h2>
+<!--        <p>Onko sinulla uusi lääketieteellinen uutinen? Paina alla olevasta linkistä niin pääset julkaisemaan sen!</p>-->
         
-            <ol>
-                <li th:each="uutinen : ${uutiset}">
-                    <a th:href="@{/{id}(id=${uutinen.id})}">
-                        <span th:text="${uutinen.otsikko}">Uutisen otsikko</span>
-                    </a>
-                </li>    
-            </ol>    
-            
+<!--        <a href:="@{/form}">Uusi uutinen!</a>-->
+        
     </body>
 </html>
+
+<!--Näiden pitäisi pystyä tuottamaan kuvia niin kuin tehtävässä sanotaan!-->

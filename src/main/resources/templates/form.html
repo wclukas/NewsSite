@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        
+    </head>
+    <body>
+        <form th:action="@{/form}" method="POST" enctype="multipart/form-data" id="uutinen">
+            <p>Otsikko: <input type="text" name="otsikko"></input></p>
+            <p>Kuva: <input type="file" name="file" id="file"></input></p>
+            <ul>
+                <li th:each="kirjoittaja : ${kirjoittajat}">
+                    <input th:text="${kirjoittaja.nimi}" type="checkbox" name="kirjoittaja"></input>
+                </li>    
+            </ul>
+            <p> Eikö joku julkaisusi kirjoittajista löydy listalta? Täytä tämä kenttä: 
+                <input type="text" name="kirjoittaja"></input>
+            </p>  
+            <p>Valitse kategoria: </p>
+            <ul>
+                <li th:each="kategoria : ${kategoriat}">
+                    <input th:text="${kategoria.nimi}" type="checkbox" name="kategoria"></input>
+                </li>    
+            </ul>
+            <p>Muista täyttää tämän nappulan alla sijaitsevat kentät!</p>
+            <input type="submit" value="Lähetä uutinen!"></input>
+            
+<!--            Lisää inputteja (kategoria & kirjoittajat)!-->
+        </form>
+        <p>Ingressi: </p>
+        <textarea name="ingressi" rows="5" cols="80" form="uutinen"></textarea>
+        <p> Teksti: </p>
+        <textarea name="teksti" rows="80" cols="80" form="uutinen"></textarea>
+    </body>
+</html>

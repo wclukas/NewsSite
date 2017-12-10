@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import lombok.Data;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -22,6 +23,10 @@ public class Uutinen extends AbstractPersistable<Long>{
     @ManyToMany
     private List<Kategoria> kategoriat;
     private LocalDate julkaisuAika;
+    @OneToOne
+    private File kuva;
+    
+//    Tälle pitäisi saada muuttuja tyypiltään File!
     
     
     public Uutinen() {
@@ -29,8 +34,11 @@ public class Uutinen extends AbstractPersistable<Long>{
         this.kategoriat = new ArrayList<>();
     }
     
-    public Uutinen(String otsikko) {
+    public Uutinen(String otsikko, LocalDate julkaisuAika) {
         this.otsikko = otsikko;
+        this.julkaisuAika = julkaisuAika;
+        this.kirjoittajat = new ArrayList<>();
+        this.kategoriat = new ArrayList<>();
     }
     
     public boolean kuuluuKategoriaan(Kategoria kategoria) {

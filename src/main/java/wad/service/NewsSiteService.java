@@ -2,11 +2,13 @@
 package wad.service;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import wad.domain.File;
 import wad.domain.Kategoria;
 import wad.domain.Kirjoittaja;
 import wad.domain.Uutinen;
@@ -39,15 +41,20 @@ public class NewsSiteService {
     
     @PostConstruct
     public void teeMuutamaUutinen() {
-        uutinenRepository.save(new Uutinen("Häkkinen voitti"));
-        uutinenRepository.save(new Uutinen("Räikkönen voitti"));
-        uutinenRepository.save(new Uutinen("Häkkinen voitti"));
-        uutinenRepository.save(new Uutinen("Häkkinen voitti"));
-        uutinenRepository.save(new Uutinen("Häkkinen voitti"));
+        uutinenRepository.save(new Uutinen("Häkkinen voitti", LocalDate.of(2006, 10, 7)));
+        uutinenRepository.save(new Uutinen("Häkki voitti", LocalDate.of(2004, 10, 7)));
+        uutinenRepository.save(new Uutinen("Häkkinen voitti", LocalDate.of(2007, 10, 7)));
+        uutinenRepository.save(new Uutinen("Hä voitti", LocalDate.of(2008, 10, 7)));
+        uutinenRepository.save(new Uutinen("Hän voitti", LocalDate.of(2009, 10, 7)));
+        uutinenRepository.save(new Uutinen("Lol voitti", LocalDate.of(2010, 10, 7)));
     }
     
     public List<Kategoria> tulostaKategoriat() {
         return kategoriaRepository.findAll();
+    }
+    
+    public List<Kirjoittaja> tulostaKirjoittajat() {
+        return kirjoittajaRepository.findAll();
     }
     
     public List<Uutinen> tulostaUutiset() {
@@ -77,7 +84,19 @@ public class NewsSiteService {
         return kirjoittajaRepository.getOne(id);
     }
     
+    public void uusiUutinen(String otsikko, String ingressi, String teksti, File file) {
+        Uutinen uutinen = new Uutinen();
+        uutinen.setOtsikko(otsikko);
+        uutinen.setIngressi(ingressi);
+        uutinen.setTeksti(teksti);
+        uutinen.setJulkaisuAika(LocalDate.now());
+        uutinen.setKuva(file);
+        uutinenRepository.save(uutinen);
+    }
     
-    
+    public File getKuva(Long id) {
+        Uutinen uutinen = uutinenRepository.getOne(id);
+        return uutinen.getKuva();
+    }
     
 }
