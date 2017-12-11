@@ -2,8 +2,10 @@
 package wad.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,11 +42,14 @@ public class NewsSiteController {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "julkaisuAika");
         model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
         model.addAttribute("loopit", uutinenRepository.findAll(pageable));
-//        Tee tähän vielä parannuksia
-        int uutismäärä = (int) uutinenRepository.count();
-        Pageable pageable2 = PageRequest.of(0, uutismäärä, Sort.Direction.DESC, "julkaisuAika");
-        model.addAttribute("uutiset", uutinenRepository.findAll(pageable2));
+
         return "etusivu";
+    }
+    
+    @GetMapping("/kaikki")
+    public String getKaikki(Model model) {
+        model.addAttribute("uutiset", uutinenRepository.findAll());
+        return "kaikki";
     }
     
     @PostMapping("/form")
@@ -53,7 +58,7 @@ public class NewsSiteController {
             @RequestParam String teksti, @RequestParam("file") MultipartFile file, 
             @RequestParam(value = "kategoriat", required=true) List<Long> kategoriat, 
             @RequestParam(value = "kirjoittajat", required=true) List<Long> kirjoittajat) throws IOException{
-//        Tähän pitää tulla se että tallentaa kuvan ja kirjoittajat jne
+
         if (!file.getContentType().equals("image/png")) {
             return "redirect:/kuva";
         }
@@ -63,7 +68,6 @@ public class NewsSiteController {
         fileRepository.save(fo);
         Uutinen uutinen = newsSiteService.uusiUutinen(otsikko, ingressi, teksti, fo);
         newsSiteService.kirjoittajatJaKategoriatUutiselle(uutinen, kategoriat, kirjoittajat);
-        
         
         return "redirect:/etusivu";
     }
@@ -97,7 +101,13 @@ public class NewsSiteController {
     
     @GetMapping(path = "/files/{id}", produces = "image/png")
     @ResponseBody
-    public byte[] get(@PathVariable Long id) {        
+    public byte[] get(@PathVariable Long id) throws IOException {        
+        if (uutinenRepository.getOne(id).getKuva().getSize() == 0L) {
+
+            InputStream in = getClass()
+      .getResourceAsStream("/com/baeldung/produceimage/image.jpg");
+            return IOUtils.toByteArray(in);
+        }
         return uutinenRepository.getOne(id).getKuva().getContent();
     }
     

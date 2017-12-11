@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+    </head>        
+    <body>
+        <h2>Kaikki uutiset: </h2>
+        
+        <ul>
+            <li th:each="uutinen : ${uutiset}">
+                <a th:href="@{/{id}(id=${uutinen.id})}">
+                    <span th:text="${uutinen.otsikko}">Uutisen otsikko</span>
+                    <span th:text="${uutinen.julkaisuAika}">Uutisen julkaisuaika</span>
+                </a>
+            </li>    
+        </ul>   
+    </body>
+</html>
