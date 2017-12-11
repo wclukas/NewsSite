@@ -2,32 +2,29 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
+        <title>Uusi uutinen</title>
         <meta charset="UTF-8"/>
         
     </head>
     <body>
+        <h1>Uusi uutinen</h1>
+        <h3>Täytä alla olevat kentät</h3>
         <form th:action="@{/form}" th:object="${uutinen}" method="POST" enctype="multipart/form-data" id="uutinen">
             <p>Otsikko: <input type="text" name="otsikko"></input></p>
             <p>Kuva: <input type="file" name="file" id="file"></input></p>
-<!--            <ul>
-                <li th:each="kirjoittaja : ${kirjoittajat}">
-                    <input th:text="${kirjoittaja.nimi}" type="checkbox" th:value="true" th:field="*{kirjoittajat}" name="@{kirjoittaja.nimi}"></input>
-                </li>    
-            </ul>
+            <select th:field="*{kirjoittajat}" multiple="true">
+                <option th:each="kirjoittaja : ${kirjoittajat}" th:value="${kirjoittaja.id}" th:text="${kirjoittaja.nimi}"></option>
+            </select>
             <p> Eikö joku julkaisusi kirjoittajista löydy listalta? Täytä tämä kenttä: 
                 <input type="text" name="kirjoittaja"></input>
             </p>  
             <p>Valitse kategoria: </p>
-            <ul>
-                <li th:each="kategoria : ${kategoriat}">
-                    <input th:text="${kategoria.nimi}" type="checkbox" name="kategoria"></input>
-                </li>    -->
-            </ul>
+            <select th:field="*{kategoriat}" multiple="true">
+                <option th:each="kategoria : ${kategoriat}" th:value="${kategoria.id}" th:text="${kategoria.nimi}"></option>
+            </select>
+           
             <p>Muista täyttää tämän nappulan alla sijaitsevat kentät!</p>
             <input type="submit" value="Lähetä uutinen!"></input>
-            
-<!--            Lisää inputteja (kategoria & kirjoittajat)!-->
         </form>
         <p>Ingressi: </p>
         <textarea name="ingressi" rows="5" cols="80" form="uutinen"></textarea>

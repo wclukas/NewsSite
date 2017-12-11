@@ -40,6 +40,16 @@ public class NewsSiteService {
     }
     
     @PostConstruct
+    public void teeKirjoittajat() {
+        kirjoittajaRepository.save(new Kirjoittaja("Jani Huuhtanen"));
+        kirjoittajaRepository.save(new Kirjoittaja("Peter Hilden"));
+        kirjoittajaRepository.save(new Kirjoittaja("Lukas Wilenius"));
+        kirjoittajaRepository.save(new Kirjoittaja("Joona Sarkkinen"));
+        kirjoittajaRepository.save(new Kirjoittaja("Anni Pohjola"));
+        kirjoittajaRepository.save(new Kirjoittaja("Osma Rautila"));
+    }
+    
+    @PostConstruct
     public void teeMuutamaUutinen() {
         uutinenRepository.save(new Uutinen("Häkkinen voitti", LocalDate.of(2006, 10, 7)));
         uutinenRepository.save(new Uutinen("Häkki voitti", LocalDate.of(2004, 10, 7)));
@@ -84,7 +94,7 @@ public class NewsSiteService {
         return kirjoittajaRepository.getOne(id);
     }
     
-    public void uusiUutinen(String otsikko, String ingressi, String teksti, File file) {
+    public Uutinen uusiUutinen(String otsikko, String ingressi, String teksti, File file) {
         Uutinen uutinen = new Uutinen();
         uutinen.setOtsikko(otsikko);
         uutinen.setIngressi(ingressi);
@@ -92,11 +102,40 @@ public class NewsSiteService {
         uutinen.setJulkaisuAika(LocalDate.now());
         uutinen.setKuva(file);
         uutinenRepository.save(uutinen);
+        return uutinen;
     }
     
     public File getKuva(Long id) {
         Uutinen uutinen = uutinenRepository.getOne(id);
         return uutinen.getKuva();
+    }
+    
+    public void uusiKategoria(String nimi) {
+        Kategoria kategoria = new Kategoria();
+        kategoria.setNimi(nimi);
+        kategoriaRepository.save(kategoria);
+    }
+    
+    public void uusiKirjoittaja(String nimi) {
+        Kirjoittaja kirjoittaja = new Kirjoittaja();
+        kirjoittaja.setNimi(nimi);
+        kirjoittajaRepository.save(kirjoittaja);
+    }
+    
+    public void kirjoittajatJaKategoriatUutiselle(Uutinen uutinen, List<Long> kategoriat, List<Long> kirjoittajat) {
+        List<Kategoria> kat = new ArrayList<>();
+        List<Kirjoittaja> kir = new ArrayList<>();
+        for (Long l : kategoriat) {
+            kat.add(kategoriaRepository.getOne(l));
+        }
+        for (Long l : kirjoittajat) {
+            kir.add(kirjoittajaRepository.getOne(l));
+        }
+        
+        uutinen.setKategoriat(kat);
+        uutinen.setKirjoittajat(kir);
+        
+        uutinenRepository.save(uutinen);
     }
     
 }

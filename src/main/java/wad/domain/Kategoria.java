@@ -1,6 +1,7 @@
 
 package wad.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -19,6 +20,7 @@ public class Kategoria extends AbstractPersistable<Long>{
     
     public Kategoria(String nimi) {
         this.nimi = nimi;
+        this.uutiset = new ArrayList<>();
     }
     
    

@@ -7,14 +7,20 @@
     </head>
     <body>
         <h1 th:text="${uutinen.otsikko}"> Uutisen otsikko</h1>
-        <h2 th:text="${uutinen.kategoriat}"> Uutisen kategoriat</h2>
-        <h4 th:text="${uutinen.julkaisuAika} + ' ' + ${uutinen.kirjoittajat}">Uutisen julkaisuaika</h4>
-<!--        <div>
-            <img th:src="@{/{id}/content(id=${current})}"/>
-        </div>-->
+        <ul>
+            <li th:each="kategoria : ${kategoriat}">
+                <span th:text="${kategoria.nimi}"></span>
+            </li>
+        </ul>
+        <ol>
+            <li th:each="kirjoittaja : ${kirjoittajat}">
+                <span th:text="${kirjoittaja.nimi}"></span>
+            </li>
+        </ol>
+        <h4 th:text="${uutinen.julkaisuAika}">Uutisen julkaisuaika</h4>
+        <img th:src="@{/files/{id}(id=${uutinen.id})}"></img>
         <h3 th:text="${uutinen.ingressi}"> Uutisen ingressi</h3>
         <p th:text="${uutinen.teksti}">Uutisen teksti</p>
-        
-<!--        Tänne vielä kuva niin rupeaa olemaan valmis!-->
+       
     </body>
 </html>
