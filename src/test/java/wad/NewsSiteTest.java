@@ -34,22 +34,12 @@ public class NewsSiteTest {
     public void setUp() {
     }
     
-    
-
     @Test
     public void postConstructMetodinKategoriatNäkyvätOikeasti() {
         List<Kategoria> kategoriat = new ArrayList<>();
         assertTrue(kategoriat.isEmpty());
         kategoriat = newsSiteService.tulostaKategoriat();
         assertFalse(kategoriat.isEmpty());
-    }
-    
-    @Test
-    public void kategorianVoiLisata() {
-        List<Kategoria> kategoriat = new ArrayList<>();
-        assertFalse(kategoriat.contains("Käsikirurgia"));
-        newsSiteService.uusiKategoria("Käsikirurgia");
-        assertTrue(kategoriat.contains("Käsikirurgia"));
     }
     
     @Test
@@ -60,8 +50,21 @@ public class NewsSiteTest {
         assertTrue(kirjoittajat.isEmpty());
         newsSiteService.uusiKategoria("Käsikirurgia");
         newsSiteService.uusiKirjoittaja("Peter Hilden");
-        assertTrue(kategoriat.get(0).getNimi().equals("Käsikirurgia"));
-        assertTrue(kirjoittajat.get(0).getNimi().equals("Peter Hilden"));
+        int kasiKir = 0;
+        int peter = 0;
+        for (Kategoria k : newsSiteService.tulostaKategoriat()) {
+            if (k.getNimi().equals("Käsikirurgia")) {
+                kasiKir++;
+            }
+        }
+        for (Kirjoittaja k : newsSiteService.tulostaKirjoittajat()) {
+            if (k.getNimi().equals("Peter Hilden")) {
+                peter++;
+            }
+        }
+        
+        assertTrue(peter == 1);
+        assertTrue(kasiKir == 1);
     }
     
     @Test

@@ -33,8 +33,7 @@ public class ApplicationTest {
     @Test
     public void statusOk() throws Exception {
         mockMvc.perform(get("/etusivu"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(status().isOk());
     }
     
 }
