@@ -2,6 +2,7 @@
 package wad.controller;
 
 import java.io.IOException;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,13 +48,15 @@ public class NewsSiteController {
     }
     
     @PostMapping("/form")
+    @Transactional
     public String post(@RequestParam String otsikko, @RequestParam String ingressi, 
-            @RequestParam String teksti, @RequestParam("file") MultipartFile file) throws IOException{
+            @RequestParam String teksti, @RequestParam("file") MultipartFile file, @ModelAttribute(value="foo") Uutinen uutinen) throws IOException{
 //        Tähän pitää tulla se että tallentaa kuvan ja kirjoittajat jne
         if (!file.getContentType().equals("image/png")) {
             return "redirect:/kuva";
         }
         File fo = new File();
+        fo.setSize(file.getSize());
         fo.setContent(file.getBytes());
         fileRepository.save(fo);
        
@@ -76,8 +80,8 @@ public class NewsSiteController {
     
     @GetMapping("/form")
     public String getForm(Model model) {
-        model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
-        model.addAttribute("kirjoittajat", newsSiteService.tulostaKirjoittajat());
+//        model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
+//        model.addAttribute("kirjoittajat", newsSiteService.tulostaKirjoittajat());
         return "form";
     }
     
@@ -90,7 +94,15 @@ public class NewsSiteController {
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
         Uutinen uutinen = uutinenRepository.getOne(id);
+//        if (uutinen.getKuva().getSize() != 0L) {
+//            return uutinen.getKuva().getContent();
+//        } else {
+//            return 
+//        }
+//Tässä pitäis lataa se tiedosto jonka latasin images-folderiin
+        
         return uutinen.getKuva().getContent();
+        
     }
     
     

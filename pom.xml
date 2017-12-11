@@ -72,16 +72,22 @@
             <version>1.0.0.Final</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
         
         <dependency>
             <groupId>org.fluentlenium</groupId>
             <artifactId>fluentlenium-core</artifactId>
             <version>3.4.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.fluentlenium</groupId>
             <artifactId>fluentlenium-junit</artifactId>
             <version>3.4.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.fluentlenium</groupId>
@@ -91,6 +97,12 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>htmlunit-driver</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     

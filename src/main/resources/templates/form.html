@@ -7,12 +7,12 @@
         
     </head>
     <body>
-        <form th:action="@{/form}" method="POST" enctype="multipart/form-data" id="uutinen">
+        <form th:action="@{/form}" th:object="${uutinen}" method="POST" enctype="multipart/form-data" id="uutinen">
             <p>Otsikko: <input type="text" name="otsikko"></input></p>
             <p>Kuva: <input type="file" name="file" id="file"></input></p>
-            <ul>
+<!--            <ul>
                 <li th:each="kirjoittaja : ${kirjoittajat}">
-                    <input th:text="${kirjoittaja.nimi}" type="checkbox" name="kirjoittaja"></input>
+                    <input th:text="${kirjoittaja.nimi}" type="checkbox" th:value="true" th:field="*{kirjoittajat}" name="@{kirjoittaja.nimi}"></input>
                 </li>    
             </ul>
             <p> Eikö joku julkaisusi kirjoittajista löydy listalta? Täytä tämä kenttä: 
@@ -22,7 +22,7 @@
             <ul>
                 <li th:each="kategoria : ${kategoriat}">
                     <input th:text="${kategoria.nimi}" type="checkbox" name="kategoria"></input>
-                </li>    
+                </li>    -->
             </ul>
             <p>Muista täyttää tämän nappulan alla sijaitsevat kentät!</p>
             <input type="submit" value="Lähetä uutinen!"></input>

@@ -24,6 +24,7 @@ public class File extends AbstractPersistable<Long>{
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
+    private Long size;
     
 //    Tämä luokka toimimaan!
     
