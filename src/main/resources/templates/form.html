@@ -14,17 +14,14 @@
         <form th:action="@{/form}" th:object="${uutinen}" method="POST" enctype="multipart/form-data" id="uutinen">
             <p>Otsikko: <input type="text" name="otsikko"></input></p>
             <p>Kuva: <input type="file" name="file" id="file"></input></p>
+            <p>Valitse kirjoittajat: </p>
             <select th:field="*{kirjoittajat}" multiple="true">
-                <option th:each="kirjoittaja : ${kirjoittajat}" th:value="${kirjoittaja.id}" th:text="${kirjoittaja.nimi}"></option>
+               <option th:each="kirjoittaja : ${kirjoittajat}" th:value="${kirjoittaja.id}" th:text="${kirjoittaja.nimi}"></option>
             </select>
-            <p> Eikö joku julkaisusi kirjoittajista löydy listalta? Täytä tämä kenttä: 
-                <input type="text" name="kirjoittaja"></input>
-            </p>  
-            <p>Valitse kategoria: </p>
+            <p>Valitse kategoriat: </p>
             <select th:field="*{kategoriat}" multiple="true">
-                <option th:each="kategoria : ${kategoriat}" th:value="${kategoria.id}" th:text="${kategoria.nimi}"></option>
+               <option th:each="kategoria : ${kategoriat}" th:value="${kategoria.id}" th:text="${kategoria.nimi}"></option>
             </select>
-           
             <p>Muista täyttää tämän nappulan alla sijaitsevat kentät!</p>
             <input type="submit" value="Lähetä uutinen!"></input>
         </form>

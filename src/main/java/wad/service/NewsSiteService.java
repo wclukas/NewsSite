@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wad.domain.File;
@@ -94,6 +95,7 @@ public class NewsSiteService {
         return kirjoittajaRepository.getOne(id);
     }
     
+    @Transactional
     public Uutinen uusiUutinen(String otsikko, String ingressi, String teksti, File file) {
         Uutinen uutinen = new Uutinen();
         uutinen.setOtsikko(otsikko);
@@ -103,7 +105,7 @@ public class NewsSiteService {
         uutinen.setKuva(file);
         uutinenRepository.save(uutinen);
         return uutinen;
-    }
+     }
     
     public File getKuva(Long id) {
         Uutinen uutinen = uutinenRepository.getOne(id);

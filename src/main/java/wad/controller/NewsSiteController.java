@@ -42,7 +42,6 @@ public class NewsSiteController {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "julkaisuAika");
         model.addAttribute("kategoriat", newsSiteService.tulostaKategoriat());
         model.addAttribute("loopit", uutinenRepository.findAll(pageable));
-
         return "etusivu";
     }
     
@@ -57,8 +56,8 @@ public class NewsSiteController {
     public String post(@RequestParam String otsikko, @RequestParam String ingressi, 
             @RequestParam String teksti, @RequestParam("file") MultipartFile file, 
             @RequestParam(value = "kategoriat", required=true) List<Long> kategoriat, 
-            @RequestParam(value = "kirjoittajat", required=true) List<Long> kirjoittajat) throws IOException{
-
+            @RequestParam(value = "kirjoittajat", required=true) List<Long> kirjoittajat) throws IOException {
+         
         if (!file.getContentType().equals("image/png")) {
             return "redirect:/kuva";
         }
@@ -66,11 +65,14 @@ public class NewsSiteController {
         fo.setSize(file.getSize());
         fo.setContent(file.getBytes());
         fileRepository.save(fo);
+        
         Uutinen uutinen = newsSiteService.uusiUutinen(otsikko, ingressi, teksti, fo);
         newsSiteService.kirjoittajatJaKategoriatUutiselle(uutinen, kategoriat, kirjoittajat);
-        
         return "redirect:/etusivu";
-    }
+    } 
+    
+
+
     
     @GetMapping("/{id}")
     public String getUutinen(Model model, @PathVariable Long id) {
